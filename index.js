@@ -35,25 +35,32 @@ rl.on('close', () => {
 });
 
 rl.on('line', async (line) => {
-  switch (line.trim()) {
-    case '.exit':
-      rl.close();
-      break;
+  const [command, ...args] = line.split(' ');
 
-    case 'up':
-      await up();
-      break;
+  try {
+    // switch (line.trim()) {
+    switch (command) {
+      case '.exit':
+        rl.close();
+        break;
 
-    case 'cd':
-      await cd('path');
-      break;
+      case 'up':
+        await up();
+        break;
 
-    case 'ls':
-      await ls();
-      break;
+      case 'cd':
+        await cd(...args);
+        break;
 
-    default:
-      console.log('Invalid input');
+      case 'ls':
+        await ls();
+        break;
+
+      default:
+        console.log('Invalid input');
+    }
+  } catch (error) {
+    console.log('Operation failed');
   }
 
   printCurrentDir();
