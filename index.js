@@ -5,6 +5,7 @@ import { ls } from './modules/nwd/ls.js';
 import { up } from './modules/nwd/up.js';
 import { cd } from './modules/nwd/cd.js';
 import { read } from './modules/fs/read-file.js';
+import { add } from './modules/fs/create-file.js';
 
 const args = process.argv.slice(2);
 const username = args.find((arg) => arg.startsWith('--username=')).replace('--username=', '');
@@ -59,6 +60,10 @@ rl.on('line', async (line) => {
 
       case 'cat':
         await read(...args);
+        break;
+
+      case 'add':
+        await add(...args);
         break;
 
       default:
