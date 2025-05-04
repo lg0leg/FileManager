@@ -8,6 +8,7 @@ import { read } from './modules/fs/read-file.js';
 import { add } from './modules/fs/create-file.js';
 import { createDir } from './modules/fs/create-dir.js';
 import { renameFile } from './modules/fs/rename-file.js';
+import { copy } from './modules/fs/copy-file.js';
 
 const args = process.argv.slice(2);
 const username = args.find((arg) => arg.startsWith('--username=')).replace('--username=', '');
@@ -74,6 +75,10 @@ rl.on('line', async (line) => {
 
       case 'rn':
         await renameFile(...args);
+        break;
+
+      case 'cp':
+        await copy(...args);
         break;
 
       default:
