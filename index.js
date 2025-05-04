@@ -4,6 +4,7 @@ import readline from 'readline';
 import { ls } from './modules/nwd/ls.js';
 import { up } from './modules/nwd/up.js';
 import { cd } from './modules/nwd/cd.js';
+import { read } from './modules/fs/read-file.js';
 
 const args = process.argv.slice(2);
 const username = args.find((arg) => arg.startsWith('--username=')).replace('--username=', '');
@@ -56,13 +57,20 @@ rl.on('line', async (line) => {
         await ls();
         break;
 
+      case 'cat':
+        await read(...args);
+        break;
+
       default:
         console.log('Invalid input');
     }
   } catch (error) {
     console.log('Operation failed');
+  } finally {
+    printCurrentDir();
+    rl.prompt();
   }
 
-  printCurrentDir();
-  rl.prompt();
+  // printCurrentDir();
+  // rl.prompt();
 });
