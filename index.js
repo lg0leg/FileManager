@@ -10,6 +10,7 @@ import { createDir } from './modules/fs/create-dir.js';
 import { renameFile } from './modules/fs/rename-file.js';
 import { copy } from './modules/fs/copy-file.js';
 import { move } from './modules/fs/move-file.js';
+import { del } from './modules/fs/delete-file.js';
 
 const args = process.argv.slice(2);
 const username = args.find((arg) => arg.startsWith('--username=')).replace('--username=', '');
@@ -84,6 +85,10 @@ rl.on('line', async (line) => {
 
       case 'mv':
         await move(...args);
+        break;
+
+      case 'rm':
+        await del(...args);
         break;
 
       default:
