@@ -1,16 +1,7 @@
 import { chdir, cwd, stdin, stdout } from 'process';
 import { homedir } from 'os';
 import readline from 'readline';
-import { ls } from './modules/nwd/ls.js';
-import { up } from './modules/nwd/up.js';
-import { cd } from './modules/nwd/cd.js';
-import { read } from './modules/fs/read-file.js';
-import { add } from './modules/fs/create-file.js';
-import { createDir } from './modules/fs/create-dir.js';
-import { renameFile } from './modules/fs/rename-file.js';
-import { copy } from './modules/fs/copy-file.js';
-import { move } from './modules/fs/move-file.js';
-import { del } from './modules/fs/delete-file.js';
+import { commandHandler } from './operations-list.js';
 
 const args = process.argv.slice(2);
 const username = args.find((arg) => arg.startsWith('--username=')).replace('--username=', '');
@@ -42,65 +33,18 @@ rl.on('close', () => {
 });
 
 rl.on('line', async (line) => {
+  if (line === '.exit') {
+    rl.close();
+  }
+
   const [command, ...args] = line.split(' ');
 
   try {
-    // switch (line.trim()) {
-    switch (command) {
-      case '.exit':
-        rl.close();
-        break;
-
-      case 'up':
-        await up();
-        break;
-
-      case 'cd':
-        await cd(...args);
-        break;
-
-      case 'ls':
-        await ls();
-        break;
-
-      case 'cat':
-        await read(...args);
-        break;
-
-      case 'add':
-        await add(...args);
-        break;
-
-      case 'mkdir':
-        await createDir(...args);
-        break;
-
-      case 'rn':
-        await renameFile(...args);
-        break;
-
-      case 'cp':
-        await copy(...args);
-        break;
-
-      case 'mv':
-        await move(...args);
-        break;
-
-      case 'rm':
-        await del(...args);
-        break;
-
-      default:
-        console.log('Invalid input');
-    }
+    await commandHandler(command, args);
   } catch (error) {
     console.log('Operation failed');
   } finally {
     printCurrentDir();
     rl.prompt();
   }
-
-  // printCurrentDir();
-  // rl.prompt();
 });
