@@ -12,6 +12,7 @@ import { eol } from './modules/os/eol.js';
 import { cpusInfo } from './modules/os/cpus.js';
 import { home } from './modules/os/homedir.js';
 import { username } from './modules/os/username.js';
+import { architecture } from './modules/os/architecture.js';
 
 export async function commandHandler(command, args) {
   switch (command) {
@@ -69,6 +70,10 @@ export async function commandHandler(command, args) {
 
     case 'username':
       await username();
+      break;
+
+    case 'architecture':
+      await architecture();
       break;
 
     default:
