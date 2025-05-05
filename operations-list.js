@@ -10,6 +10,7 @@ import { move } from './modules/fs/move-file.js';
 import { del } from './modules/fs/delete-file.js';
 import { eol } from './modules/os/eol.js';
 import { cpusInfo } from './modules/os/cpus.js';
+import { home } from './modules/os/homedir.js';
 
 export async function commandHandler(command, args) {
   switch (command) {
@@ -59,6 +60,10 @@ export async function commandHandler(command, args) {
 
     case 'cpus':
       await cpusInfo();
+      break;
+
+    case 'homedir':
+      await home();
       break;
 
     default:
