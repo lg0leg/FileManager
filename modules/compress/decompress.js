@@ -1,10 +1,10 @@
 import { cwd } from 'node:process';
-import { isAbsolute, join, parse, resolve } from 'node:path';
+import { isAbsolute, resolve } from 'node:path';
 import { createReadStream, createWriteStream } from 'node:fs';
-import { createBrotliCompress } from 'node:zlib';
+import { createBrotliDecompress } from 'node:zlib';
 import { pipeline } from 'stream/promises';
 
-export const compress = async (...args) => {
+export const decompress = async (...args) => {
   let pathToFile;
 
   if (isAbsolute(args[0])) {
@@ -13,21 +13,19 @@ export const compress = async (...args) => {
     pathToFile = resolve(cwd(), args[0]);
   }
 
-  const fileName = parse(args[0]).name;
-
-  const pathToDestination = join(args[1], `${fileName}.br`);
+  const pathToDestination = args[1];
 
   try {
     const readStream = createReadStream(pathToFile);
     const writeStream = createWriteStream(pathToDestination);
-    const compressStream = createBrotliCompress();
+    const decompressStream = createBrotliDecompress();
 
-    await pipeline(readStream, compressStream, writeStream);
+    await pipeline(readStream, decompressStream, writeStream);
 
-    console.log('Successfully compressed');
+    console.log('Successfully decompressed');
   } catch (err) {
     throw new Error('Operation failed');
   }
 };
 
-//format: compress file folder
+//format: decompress file file
