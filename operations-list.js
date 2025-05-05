@@ -14,6 +14,7 @@ import { home } from './modules/os/homedir.js';
 import { username } from './modules/os/username.js';
 import { architecture } from './modules/os/architecture.js';
 import { hash } from './modules/hash/hash.js';
+import { compress } from './modules/compress/compress.js';
 
 export async function commandHandler(command, args) {
   switch (command) {
@@ -79,6 +80,10 @@ export async function commandHandler(command, args) {
 
     case 'hash':
       await hash(...args);
+      break;
+
+    case 'compress':
+      await compress(...args);
       break;
 
     default:
