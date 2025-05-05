@@ -37,7 +37,9 @@ rl.on('line', async (line) => {
     rl.close();
   }
 
-  const [command, ...args] = line.split(' ');
+  // const [command, ...args] = line.split(' ');
+
+  const [command, ...args] = line.startsWith('os') ? [line.replace('os --', ''), []] : line.split(' ');
 
   try {
     await commandHandler(command, args);

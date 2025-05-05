@@ -8,6 +8,7 @@ import { renameFile } from './modules/fs/rename-file.js';
 import { copy } from './modules/fs/copy-file.js';
 import { move } from './modules/fs/move-file.js';
 import { del } from './modules/fs/delete-file.js';
+import { eol } from './modules/os/eol.js';
 
 export async function commandHandler(command, args) {
   switch (command) {
@@ -49,6 +50,10 @@ export async function commandHandler(command, args) {
 
     case 'rm':
       await del(...args);
+      break;
+
+    case 'EOL':
+      await eol();
       break;
 
     default:
